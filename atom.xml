@@ -1,15 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title>My Octopress Blog</title>
+  <title>muttsnutts note&#8217;s</title>
   <link href="http://muttsnutts.github.com//atom.xml" rel="self"/>
   <link href="http://muttsnutts.github.com//"/>
-  <updated>2011-09-12T18:50:08-05:00</updated>
+  <updated>2011-09-12T20:36:50-05:00</updated>
   <id>http://muttsnutts.github.com//</id>
   <author>
     <name>muttsnutts</name>
     
   </author>
 
+  
+  <entry>
+    <title>Manage $PATH on Mac OS X Lion 10.7</title>
+    <link href="http://muttsnutts.github.com//blog/2011/09/12/manage-path-on-mac-os-x-lion/"/>
+    <updated>2011-09-12T20:23:00-05:00</updated>
+    <id>http://muttsnutts.github.com//blog/2011/09/12/manage-path-on-mac-os-x-lion</id>
+    <content type="html">&lt;p&gt;Starting with Leopard, the program &lt;code&gt;/usr/libexec/path_helper&lt;/code&gt; was introduced to &lt;em&gt;help&lt;/em&gt; manage the $PATH environment variable.&lt;/p&gt;
+
+&lt;p&gt;It is started by the &lt;code&gt;/etc/profile&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;bash&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; -x /usr/libexec/path_helper &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;; &lt;span class=&quot;k&quot;&gt;then&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;k&quot;&gt;    &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;eval&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;/usr/libexec/path_helper -s&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;&lt;span class=&quot;k&quot;&gt;fi&lt;/span&gt;
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;p&gt;When &lt;code&gt;path_helper&lt;/code&gt; is called, it searches various files, looking for &lt;em&gt;new paths&lt;/em&gt; to add&amp;#8230;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;it first reads from the file &lt;code&gt;/etc/paths&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;then reads files under the folder &lt;code&gt;/etc/paths.d/&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;and finally, oddly enough, the initial value of $PATH (prior to calling path_helper) is appended&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;strong&gt;Under the hood:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;path_helper only appends unique paths, so duplicates are avoided&lt;/li&gt;
+&lt;li&gt;files from &lt;code&gt;etc/paths.d&lt;/code&gt; are read in alphabetical order by filename&lt;/li&gt;
+&lt;li&gt;the default value for $PATH (prior to calling path_helper) is &lt;code&gt;/usr/bin:/bin:/usr/sbin:/sbin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;the default contents of file &lt;code&gt;etc/paths&lt;/code&gt; is&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;2&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;3&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;4&lt;/span&gt;
+&lt;span class=&#8217;line&#8217;&gt;5&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;bash&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;/usr/bin
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;/bin
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;/usr/sbin
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;/sbin
+&lt;/div&gt;&lt;div class=&#8217;line&#8217;&gt;/usr/local/bin
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;h3&gt;How do I add more Paths ?&lt;/h3&gt;
+
+&lt;p&gt;To add custom paths, you &lt;em&gt;should&lt;/em&gt; create a plaintext file containing new paths (one per line) and place the file under the folder &lt;code&gt;/etc/paths.d&lt;/code&gt;.  &lt;strong&gt;Remember to end file with a newline!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Or from the terminal you can:&lt;/p&gt;
+
+&lt;figure role=code&gt;&lt;figcaption&gt;&lt;span&gt;&lt;/span&gt;&lt;/figcaption&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;table cellpadding=&quot;0&quot; cellspacing=&quot;0&quot;&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre class=&quot;line-numbers&quot;&gt;&lt;span class=&#8217;line&#8217;&gt;1&lt;/span&gt;
+&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#8217;code&#8217; width=&#8217;100%&#8217;&gt;&lt;pre&gt;&lt;code class=&#8217;bash&#8217;&gt;&lt;div class=&#8217;line&#8217;&gt;sudo sh -c &lt;span class=&quot;s1&quot;&gt;&amp;#39;echo &amp;quot;/some/other/path&amp;quot; &amp;gt;&amp;gt; /etc/paths.d/another_paths_file&amp;#39;&lt;/span&gt;  
+&lt;/div&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;&lt;/figure&gt;
+
+
+&lt;h3&gt;How do I make Homebrew happy ?&lt;/h3&gt;
+
+&lt;p&gt;&lt;code&gt;brew doctor&lt;/code&gt; commonly complains that &lt;code&gt;/usr/bin is in your PATH before Homebrew&#8217;s bin&lt;/code&gt;.&lt;br/&gt;
+To fix this, move &lt;code&gt;/usr/local/bin&lt;/code&gt; to the top of list in &lt;code&gt;/etc/paths&lt;/code&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt;  The above changes are system-wide and will affect all users.  If you only want to modify $PATH for a specific user, edit
+&lt;code&gt;~/.bash_profile&lt;/code&gt;, &lt;code&gt;~/.bash_login&lt;/code&gt;, or &lt;code&gt;~/.profile&lt;/code&gt; instead.&lt;/p&gt;
+</content>
+  </entry>
   
 </feed>
